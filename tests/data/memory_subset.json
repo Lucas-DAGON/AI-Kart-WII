@@ -1,0 +1,329 @@
+{
+ "GameState": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 0,
+  "address": "0x80000CF6"
+ },
+ "LeCodeTrackId": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 0,
+  "address": "0x808F9420"
+ },
+ "LocalPlayerNumber": {
+  "type": "int8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceData"
+ },
+ "PlayerType": {
+  "type": "int32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceData"
+ },
+ "TeamId": {
+  "type": "int32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceData"
+ },
+ "Score": {
+  "type": "uint16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceData"
+ },
+ "RaceCompletion": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "RaceCompletionMax": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "RacePosition": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "RespawnState": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "CurrentLap": {
+  "type": "uint16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "CurrentLapCandidate": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "MaxLap": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "CurrentKcp": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "MaxKcp": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "RaceFrameCounter": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfoPlayer"
+ },
+ "VehicleSpeed": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "DriftState": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "MtCharge": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "SmtCharge": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "StarTimer": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "MegaTimer": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "ShockTimer": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "CrushTimer": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "BoostTypes": {
+  "type": "uint16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "DirectionX": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "DirectionY": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "DirectionZ": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub10"
+ },
+ "PhysicsPositionX": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerPhysics"
+ },
+ "PhysicsPositionY": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerPhysics"
+ },
+ "PhysicsPositionZ": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerPhysics"
+ },
+ "PreRespawnTimer": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub18"
+ },
+ "SolidOutOfBoundsTimer": {
+  "type": "int16",
+  "length": 2,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub18"
+ },
+ "InputFlags0": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "InputFlags1": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "InputFlags2": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "InputFlags3": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "StickX": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "StickY": {
+  "type": "single",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "CheckpointId": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "LapCount": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceDataSettings"
+ },
+ "RaceInfoStage": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceInfo"
+ },
+ "RaceDataPlayerCount": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceDataScenario"
+ },
+ "RaceDataLocalPlayerCount": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceDataScenario"
+ },
+ "HudPlayerId0": {
+  "type": "uint8",
+  "length": 1,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "raceDataSettings"
+ },
+ "AirTime": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerSub1c"
+ },
+ "IsBike": {
+  "type": "uint32",
+  "length": 4,
+  "availability": 1,
+  "dynamic": true,
+  "dynamicBase": "playerParams"
+ }
+}

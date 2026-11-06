@@ -221,3 +221,13 @@ __marimo__/
 
 # Rider
 /.idea
+# AI-Kart-WII specific
+ai_kart_wii/training/recorded_runs/*
+ai_kart_wii/training/logs/*
+ai_kart_wii/training/models/*
+!ai_kart_wii/training/*/.gitkeep
+dotnet/*.dll
+dotnet/*.pdb
+build/
+dist/
+*.spec

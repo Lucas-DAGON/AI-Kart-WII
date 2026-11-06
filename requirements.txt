@@ -1,0 +1,6 @@
+# Latest versions on purpose. See pyproject.toml.
+numpy
+opencv-python
+mss
+pythonnet
+vgamepad; sys_platform == "win32"
