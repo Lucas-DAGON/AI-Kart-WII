@@ -41,7 +41,7 @@ map library (future C#) ─► map/ (Navigator: heading error, surface) ──�
    automatically in the development layout.
 4. Dolphin: map the GameCube pad of the AI's port to the virtual Xbox pad:
    A→A, B→B, X→X, Y→Y, Z→RB, Start→Start, D-pad→D-pad, L→LT, R→RT, stick→left stick, C-stick→right stick
-   (edit `control/virtual_pad.py:GC_TO_XUSB` if you map differently).
+   (see `control/virtual_pad.py:GC_TO_XUSB`).
 5. `python -m ai_kart_wii check` while a race runs, to see live, validated state.
 
 Note on versions: dependencies are intentionally unpinned. pythonnet may lag the newest Python;
