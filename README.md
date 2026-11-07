@@ -58,6 +58,47 @@ python -m ai_kart_wii fake-server  # Windows: fake GameManager on \\.\pipe\GameM
 pytest                             # tests (fake GameManager, no Dolphin needed)
 ```
 
+## Importing a human recording (DTM + video)
+
+```
+python -m ai_kart_wii dtm-info rec.dtm
+python -m ai_kart_wii import-dtm rec.dtm --video rec.mp4 --offset 0 --track-id 8
+python -m ai_kart_wii import-dtm rec.dtm --video rec.mp4 --auto-sync      # experimental
+python -m ai_kart_wii import-dtm rec.dtm --video rec.mp4 --only-driving   # skip menus / waiting
+```
+
+`dtm-info` also lists the driving segments it detects (A held, with real steering; A releases shorter than 8 s, e.g. bullet bill or falling, are bridged, and the tail after your last real input, such as the results screen, is cut). `import-dtm --dry-run` only compares video and DTM lengths. The video does not
+have to be the same length: if it holds exactly one image per VI frame the frame counts match (offset 0,
+scale 1) and `import-dtm` says so; otherwise it warns, and `--scale` / `--offset` / `--auto-sync` apply.
+
+* `recording/dtm.py` reads Dolphin `.dtm` files: it separates your pad (records with the `IsConnected`
+  flag) from unconnected ports and Wiimote records, and checks the record count against the header, so
+  a mis-parse is reported instead of silently producing garbage. The sample recording has exactly 2 pad
+  polls per VI frame; the importer uses the last poll of each frame.
+* Video frame `v` corresponds to DTM frame `v + offset`. The importer does not copy the video; `meta.json`
+  stores its path and the offset. The label for each frame is the human's `DrivingAction`
+  (steer, accelerate, brake, drift, item, rear view, trick).
+* `--sync-report` / `--auto-sync` correlate the stick signal with the horizontal image motion of the video, in
+  several slices (`--windows`, default 4). Constant offsets mean a clean 1:1 mapping (e.g. the recording was
+  simply cut short); offsets that grow or shrink mean dropped/duplicated frames, and the fit prints the scale to
+  use. `--auto-sync` applies the fitted offset (and scale if it drifts). Validated on synthetic data only: check the
+  first seconds visually. `--dry-run` runs everything but writes nothing.
+* Most robust: replay the DTM in Dolphin with **frame dumping** on. One image per VI frame means no sync at all.
+* A DTM holds inputs only, not positions: states (`position`, `race_completion`, ...) are absent from imported
+  runs. Replaying the DTM with `record` running would add them, aligned by `RaceFrameCounter`.
+
+`python -m ai_kart_wii calibrate-yaw` decides `geometry.YAW_POSITIVE_IS_RIGHT` from live data (the game's own
+`StickX` against the change of kart direction) while you steer left and right during a race.
+
+## Trying the wrapper on Windows without Dolphin
+
+1. Build `GameManager.Shared.dll` into `dotnet/` (see Setup), `pip install -e .[dev]`.
+2. Terminal 1: `python -m ai_kart_wii fake-server` (pipe `\\.\pipe\GameManager`, fake race already in state 2).
+3. Terminal 2: `python -m ai_kart_wii check` – connects with the real C# client through pythonnet,
+   registers as `AI-Kart-WIIManager` and prints validated state. Any failure at a `# PYTHONNET:` line in
+   `ipc/pythonnet_client.py` tells exactly which conversion needs adjusting.
+(The real GameManager must not run at the same time: both use the same pipe name.)
+
 ## Testing against a fake GameManager (two layers)
 
 * **Wrapper level** – `testing/fake_backend.py` implements `GameManagerBackend` in memory with the real
@@ -83,7 +124,8 @@ the exe when frozen. `children.json` expects `AI-Kart-WIIManager.exe`. Not tried
 
 * pythonnet loading and the `# PYTHONNET:` call sites in `ipc/pythonnet_client.py` (generic call, nullable int, JsonElement unboxing, exception translation)
 * Win32 window enumeration, mss capture on your monitors, vgamepad/ViGEm calls, the Windows pipe server
-* Game facts assumed: item = L, drift = R, `YAW_POSITIVE_IS_RIGHT`, pause-menu restart order, PlayerType 0 = local, lap field semantics
+* Game facts still assumed: `YAW_POSITIVE_IS_RIGHT` (run `calibrate-yaw`), PlayerType 0 = local, lap field semantics. Confirmed by you: A accelerate, B brake, R drift, L item, X rear view, D-pad tricks/wheelie, pause menu = pause, down, A
+* DTM auto-sync on real footage
 * All validation ranges
 
 ## Map library contract (proposal, see `map/interface.py`)
