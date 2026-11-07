@@ -53,20 +53,25 @@ class DrivingAction:
     brake: bool = False
     drift: bool = False  # hop / drift button (future: not used by the basic driver)
     use_item: bool = False
+    rear_view: bool = False
+    # D-pad: "up" | "down" | "left" | "right" | None. Used for tricks in the air and, on
+    # bikes, "up" on the ground is the wheelie.
+    trick: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
 class ControlScheme:
     """Maps driving meanings to GameCube inputs.
 
-    ASSUMPTION (confirm for your mod's controls): A accelerate, B brake/reverse,
-    R drift/hop, L use item. Change here if the mod differs.
+    Confirmed controls: A accelerate, B brake/reverse, R drift/hop, L use item,
+    X rear view, D-pad tricks (bike: D-pad up on the ground = wheelie).
     """
 
     accelerate_button: str = "A"
     brake_button: str = "B"
     drift_trigger: str = "r"  # "l" or "r" analog trigger
     item_trigger: str = "l"
+    rear_view_button: str = "X"
 
     def to_controller(self, action: DrivingAction) -> ControllerAction:
         buttons: set[str] = set()
@@ -74,6 +79,12 @@ class ControlScheme:
             buttons.add(self.accelerate_button)
         if action.brake:
             buttons.add(self.brake_button)
+        if action.rear_view:
+            buttons.add(self.rear_view_button)
+        if action.trick is not None:
+            if action.trick not in ("up", "down", "left", "right"):
+                raise ValueError(f"Unknown trick direction: {action.trick!r}")
+            buttons.add(f"DPAD_{action.trick.upper()}")
         analog = {"l": 0.0, "r": 0.0}
         if action.drift:
             analog[self.drift_trigger] = 1.0
@@ -84,4 +95,18 @@ class ControlScheme:
             l=analog["l"],
             r=analog["r"],
             buttons=frozenset(buttons),
+        )
+
+    def to_driving(self, pad: ControllerAction) -> DrivingAction:
+        """Inverse of to_controller: used to turn recorded human input into labels."""
+        trick = next((d for d in ("up", "down", "left", "right") if f"DPAD_{d.upper()}" in pad.buttons), None)
+        triggers = {"l": pad.l, "r": pad.r}
+        return DrivingAction(
+            steer=pad.stick_x,
+            accelerate=self.accelerate_button in pad.buttons,
+            brake=self.brake_button in pad.buttons,
+            drift=triggers[self.drift_trigger] > 0.5,
+            use_item=triggers[self.item_trigger] > 0.5,
+            rear_view=self.rear_view_button in pad.buttons,
+            trick=trick,
         )
