@@ -24,7 +24,8 @@ class RecordedRun:
                     yield json.loads(line)
 
     def frames(self) -> Iterator[np.ndarray]:
-        video = self.path / VIDEO_FILE
+        external = self.meta.get("video_path")
+        video = Path(external) if external else self.path / VIDEO_FILE
         if video.exists():
             capture = cv2.VideoCapture(str(video))
             try:
